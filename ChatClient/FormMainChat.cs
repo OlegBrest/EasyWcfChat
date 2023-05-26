@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Net;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Windows.Forms;
 using ChatClient.ServiceChat;
 
@@ -11,12 +15,14 @@ namespace ChatClient
         string userName = "Имя пользователя";
         ServiceChatClient client;
         int ID = -1;
-
+        EndpointAddress ServerEndPoint = new EndpointAddress("net.tcp://localhost:8734/");
+        string endpointConfigurationName = "NetTcpBinding_IServiceChat"; // <netTcpBinding> <binding name = ... and <client> bindingConfiguration in app.config
 
         public FormMainChat()
         {
             InitializeComponent();
             userName = Properties.Settings.Default.UserName;
+            ServerEndPoint = new EndpointAddress(@"net.tcp://" +Properties.Settings.Default.serverAddress.ToString() + ":" + Properties.Settings.Default.ServerPort.ToString()+@"/");
             mainFormInterfaceUpdate();
         }
 
@@ -44,9 +50,14 @@ namespace ChatClient
             DialogResult dr = formSettings.ShowDialog();
             if (dr == DialogResult.OK)
             {
+                #region changing User Name and connect properties
                 Properties.Settings.Default.Reload();
                 userName = Properties.Settings.Default.UserName;
+                string serverAddress = @"net.tcp://" + Properties.Settings.Default.serverAddress.ToString() + ":" + Properties.Settings.Default.ServerPort.ToString() + @"/";
+                ServerEndPoint = new EndpointAddress(serverAddress);
+                client = new ServiceChatClient(new System.ServiceModel.InstanceContext(this), endpointConfigurationName, ServerEndPoint);
                 mainFormInterfaceUpdate();
+                #endregion
             }
         }
 
@@ -94,7 +105,7 @@ namespace ChatClient
 
         private void FormMainChat_Load(object sender, EventArgs e)
         {
-            client = new ServiceChatClient(new System.ServiceModel.InstanceContext(this));
+            client = new ServiceChatClient(new System.ServiceModel.InstanceContext(this), endpointConfigurationName,ServerEndPoint);
         }
 
         private void FormMainChat_FormClosing(object sender, FormClosingEventArgs e)

@@ -20,6 +20,8 @@ namespace ChatClient
         private void bttnOk_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.UserName = txtbxUserName.Text;
+            Properties.Settings.Default.serverAddress = txtbxServerAddress.Text;
+            Properties.Settings.Default.ServerPort = portUpDown.Value;
             Properties.Settings.Default.Save();
             this.DialogResult = DialogResult.OK;
         }

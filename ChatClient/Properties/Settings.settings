@@ -5,5 +5,11 @@
     <Setting Name="UserName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Имя пользователя</Value>
     </Setting>
+    <Setting Name="serverAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="ServerPort" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">8734</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
