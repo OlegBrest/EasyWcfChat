@@ -7,7 +7,7 @@ namespace EasyWcfChat
     public interface IServiceChat
     {
         [OperationContract]
-        int Connect(string user);
+        int Connect(string user,int userID);
 
         [OperationContract]
         void Disconnect(int id);

@@ -9,33 +9,51 @@ namespace EasyWcfChat
     public class ServiceChat : IServiceChat
     {
 
-        List<ServerUser> users = new List<ServerUser>();
+        List<ServerUser> serverUsers = new List<ServerUser>();
         int nextId = 0;
 
-        public int Connect(string userName)
+        public int Connect(string userName,int userID)
         {
-            if (users.FirstOrDefault(x => x.Name == userName) == null)
+            int retval = userID;
+            if (serverUsers.FirstOrDefault(x => x.Name == userName) == null)
             {
-                ServerUser user = new ServerUser()
+                if (retval == -1)
                 {
-                    ID = ++nextId,
-                    Name = userName,
-                    operationContext = OperationContext.Current
-                };
-                SendMsg(" " + user.Name + " ворвался в чат", 0);
-                users.Add(user);
-                ResendUsersList();
-                return nextId;
+                    ServerUser user = new ServerUser()
+                    {
+                        ID = ++nextId,
+                        Name = userName,
+                        operationContext = OperationContext.Current
+                    };
+                    SendMsg(" " + user.Name + " ворвался в чат", 0);
+                    serverUsers.Add(user);
+                    ResendUsersList();
+                    retval = nextId;
+                }
+                else
+                {
+                    ServerUser user = new ServerUser()
+                    {
+                        ID = userID,
+                        Name = userName,
+                        operationContext = OperationContext.Current
+                    };
+                    serverUsers.Add(user);
+                }
             }
-            else return -1;
+            else 
+            {
+                retval = serverUsers.FirstOrDefault(x=>x.Name == userName).ID;
+            }
+            return retval;
         }
 
         public void Disconnect(int id)
         {
-            ServerUser user = users.FirstOrDefault(x => x.ID == id);
+            ServerUser user = serverUsers.FirstOrDefault(x => x.ID == id);
             if (user != null)
             {
-                users.Remove(user);
+                serverUsers.Remove(user);
                 SendMsg(" " + user.Name + " покинул чат", 0);
             }
             ResendUsersList();
@@ -43,11 +61,11 @@ namespace EasyWcfChat
 
         public void SendMsg(string msg, int id)
         {
-            foreach (ServerUser currentUser in users)
+            foreach (ServerUser currentUser in serverUsers)
             {
                 string answer = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
-                ServerUser user = users.FirstOrDefault(x => x.ID == id);
-                bool isSystem = (user == null);
+                ServerUser user = serverUsers.FirstOrDefault(x => x.ID == id);
+                bool isSystem = ((user == null)||(id==0));
                 if (!isSystem)
                 {
                     answer += (" : " + user.Name + " ");
@@ -60,7 +78,7 @@ namespace EasyWcfChat
 
         public void ResendUsersList ()
         {
-            foreach (ServerUser currentUser in users)
+            foreach (ServerUser currentUser in serverUsers)
             {
                if (currentUser.ID!=nextId) SendMsg(1, currentUser);
             }
@@ -82,7 +100,7 @@ namespace EasyWcfChat
         private string UsersToString ()
         {
             string stringUsers = "Users:";
-            foreach (ServerUser currentUser in users) {
+            foreach (ServerUser currentUser in serverUsers) {
                 if (stringUsers!= "Users:")
                 {
                     stringUsers += "|";

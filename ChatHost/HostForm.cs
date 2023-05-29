@@ -35,6 +35,7 @@ namespace ChatHost
                 {
                     UpdateUserList(msg.Split(':')[1]);
                 }
+                else if (msg.Contains("ConnectTesting"));
                 else
                     consoleListBox.Items.Add(msg);
             }

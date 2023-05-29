@@ -35,12 +35,17 @@
             this.DisconnectItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsSettings = new System.Windows.Forms.ToolStripButton();
             this.PanelMain = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.lstbxUsers = new System.Windows.Forms.ListBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.bttnSend = new System.Windows.Forms.Button();
             this.txtbxMssg = new System.Windows.Forms.TextBox();
             this.lstbxMainChat = new System.Windows.Forms.ListBox();
             this.toolStripMain.SuspendLayout();
             this.PanelMain.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMain
@@ -50,7 +55,7 @@
             this.toolsSettings});
             this.toolStripMain.Location = new System.Drawing.Point(0, 0);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(526, 25);
+            this.toolStripMain.Size = new System.Drawing.Size(541, 25);
             this.toolStripMain.TabIndex = 0;
             this.toolStripMain.Text = "toolStrip1";
             // 
@@ -95,32 +100,64 @@
             // 
             // PanelMain
             // 
-            this.PanelMain.Controls.Add(this.lstbxUsers);
+            this.PanelMain.Controls.Add(this.tabControl1);
             this.PanelMain.Controls.Add(this.bttnSend);
             this.PanelMain.Controls.Add(this.txtbxMssg);
             this.PanelMain.Controls.Add(this.lstbxMainChat);
             this.PanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelMain.Location = new System.Drawing.Point(0, 25);
             this.PanelMain.Name = "PanelMain";
-            this.PanelMain.Size = new System.Drawing.Size(526, 406);
+            this.PanelMain.Size = new System.Drawing.Size(541, 396);
             this.PanelMain.TabIndex = 1;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(385, 3);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(152, 319);
+            this.tabControl1.TabIndex = 4;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.lstbxUsers);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(144, 293);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Участники";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // lstbxUsers
             // 
-            this.lstbxUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstbxUsers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstbxUsers.FormattingEnabled = true;
-            this.lstbxUsers.Location = new System.Drawing.Point(415, 3);
+            this.lstbxUsers.Location = new System.Drawing.Point(3, 3);
             this.lstbxUsers.Name = "lstbxUsers";
-            this.lstbxUsers.Size = new System.Drawing.Size(111, 329);
+            this.lstbxUsers.Size = new System.Drawing.Size(138, 287);
             this.lstbxUsers.TabIndex = 3;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(144, 293);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Смайлики";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // bttnSend
             // 
             this.bttnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bttnSend.Location = new System.Drawing.Point(427, 341);
+            this.bttnSend.Location = new System.Drawing.Point(389, 328);
             this.bttnSend.Name = "bttnSend";
-            this.bttnSend.Size = new System.Drawing.Size(99, 56);
+            this.bttnSend.Size = new System.Drawing.Size(144, 56);
             this.bttnSend.TabIndex = 2;
             this.bttnSend.Text = "Отправить";
             this.bttnSend.UseVisualStyleBackColor = true;
@@ -130,10 +167,10 @@
             // 
             this.txtbxMssg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtbxMssg.Location = new System.Drawing.Point(3, 338);
+            this.txtbxMssg.Location = new System.Drawing.Point(3, 328);
             this.txtbxMssg.Multiline = true;
             this.txtbxMssg.Name = "txtbxMssg";
-            this.txtbxMssg.Size = new System.Drawing.Size(418, 59);
+            this.txtbxMssg.Size = new System.Drawing.Size(380, 59);
             this.txtbxMssg.TabIndex = 1;
             this.txtbxMssg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtbxMssg_KeyDown);
             // 
@@ -145,14 +182,14 @@
             this.lstbxMainChat.FormattingEnabled = true;
             this.lstbxMainChat.Location = new System.Drawing.Point(3, 3);
             this.lstbxMainChat.Name = "lstbxMainChat";
-            this.lstbxMainChat.Size = new System.Drawing.Size(406, 329);
+            this.lstbxMainChat.Size = new System.Drawing.Size(380, 316);
             this.lstbxMainChat.TabIndex = 0;
             // 
             // FormMainChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(526, 431);
+            this.ClientSize = new System.Drawing.Size(541, 421);
             this.Controls.Add(this.PanelMain);
             this.Controls.Add(this.toolStripMain);
             this.Name = "FormMainChat";
@@ -163,6 +200,8 @@
             this.toolStripMain.PerformLayout();
             this.PanelMain.ResumeLayout(false);
             this.PanelMain.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,6 +219,9 @@
         private System.Windows.Forms.Button bttnSend;
         private System.Windows.Forms.TextBox txtbxMssg;
         private System.Windows.Forms.ListBox lstbxUsers;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 

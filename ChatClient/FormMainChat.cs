@@ -17,25 +17,69 @@ namespace ChatClient
         int ID = -1;
         EndpointAddress ServerEndPoint = new EndpointAddress("net.tcp://localhost:8734/");
         string endpointConfigurationName = "NetTcpBinding_IServiceChat"; // <netTcpBinding> <binding name = ... and <client> bindingConfiguration in app.config
+        System.Timers.Timer connectCheckTimer;
 
         public FormMainChat()
         {
             InitializeComponent();
             userName = Properties.Settings.Default.UserName;
-            ServerEndPoint = new EndpointAddress(@"net.tcp://" +Properties.Settings.Default.serverAddress.ToString() + ":" + Properties.Settings.Default.ServerPort.ToString()+@"/");
+            ServerEndPoint = new EndpointAddress(@"net.tcp://" + Properties.Settings.Default.serverAddress.ToString() + ":" + Properties.Settings.Default.ServerPort.ToString() + @"/");
             mainFormInterfaceUpdate();
+            connectCheckTimer = new System.Timers.Timer(2000);
+            connectCheckTimer.AutoReset = true;
+            connectCheckTimer.Start();
+            connectCheckTimer.Elapsed += ConnectCheckTimer_Elapsed;
+        }
+
+        private void ConnectCheckTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (isConnected)
+            {
+                try
+                {
+                    client.SendMsg("ConnectTesting", 0);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("Коммуникационный объект System.ServiceModel.Channels.ServiceChannel нельзя использовать для связи, так как он находится в состоянии Faulted."))
+                    {
+                        try
+                        {
+                            client = new ServiceChatClient(new System.ServiceModel.InstanceContext(this), endpointConfigurationName, ServerEndPoint);
+                            ConnectItem_Click(this, null);
+                            client.SendMsg("ConnectTesting", 0);
+                        }
+                        catch (Exception reconnectEx)
+                        {
+                            listBoxInvokAdder(lstbxMainChat, DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + " Ошибка связи с сервером");
+                            listBoxInvokAdder(lstbxMainChat, " " + reconnectEx.Message);
+                        }
+                        listBoxInvokAdder(lstbxMainChat, DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + " Переподклечен к серверу.");
+                    }
+                    else
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
         }
 
         private void ConnectItem_Click(object sender, EventArgs e)
         {
-            ID = client.Connect(userName);
-            if (ID == -1) MessageBox.Show("Пользователь с именем " + userName + " уже зарегистрирован на сервере!");
-            client.SendMsg(" Init "+userName,0);
+            if ((client == null) || (client.State != CommunicationState.Created))
+            {
+                client = new ServiceChatClient(new System.ServiceModel.InstanceContext(this), endpointConfigurationName, ServerEndPoint);
+            }
+            int newID = client.Connect(userName,ID);
+            if ((newID == -1) || ((newID != ID) && (ID != -1))) MessageBox.Show("Пользователь с ником " + userName + " уже зарегистрирован на сервере!");
+            else ID = newID;
+            client.SendMsg(" Init " + userName, 0);
             mainFormInterfaceUpdate();
         }
 
         private void DisconnectItem_Click(object sender, EventArgs e)
         {
+            isConnected = false;
             if (client.State == System.ServiceModel.CommunicationState.Opened)
             {
                 client.Disconnect(ID);
@@ -85,10 +129,10 @@ namespace ChatClient
                 {
                     UpdateUserList(msg.Split(':')[1]);
                 }
-                //lstbxMainChat.Items.Add(msg);
+                //listBoxInvokAdder(lstbxMainChat,msg);
             }
             else
-                lstbxMainChat.Items.Add(msg);
+                listBoxInvokAdder(lstbxMainChat, msg);
         }
         private void UpdateUserList(string users)
         {
@@ -105,7 +149,7 @@ namespace ChatClient
 
         private void FormMainChat_Load(object sender, EventArgs e)
         {
-            client = new ServiceChatClient(new System.ServiceModel.InstanceContext(this), endpointConfigurationName,ServerEndPoint);
+            client = new ServiceChatClient(new System.ServiceModel.InstanceContext(this), endpointConfigurationName, ServerEndPoint);
         }
 
         private void FormMainChat_FormClosing(object sender, FormClosingEventArgs e)
@@ -128,9 +172,50 @@ namespace ChatClient
 
         private void sendingMessage()
         {
-            client.SendMsg(txtbxMssg.Text, ID);
-            txtbxMssg.Text = string.Empty;
-            txtbxMssg.Focus();
+            try
+            {
+                client.SendMsg(txtbxMssg.Text, ID);
+                txtbxMssg.Text = string.Empty;
+                txtbxMssg.Focus();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("System.ServiceModel.Channels.ServiceChannel") && (client.State == CommunicationState.Faulted))
+                {
+                    try
+                    {
+                        client = new ServiceChatClient(new System.ServiceModel.InstanceContext(this), endpointConfigurationName, ServerEndPoint);
+                        ConnectItem_Click(this, null);
+                        client.SendMsg(txtbxMssg.Text, ID);
+                        txtbxMssg.Text = string.Empty;
+                        txtbxMssg.Focus();
+                    }
+                    catch (Exception reconnectEx)
+                    {
+                        listBoxInvokAdder(lstbxMainChat, " Ошибка связи с сервером");
+                        listBoxInvokAdder(lstbxMainChat, " " + reconnectEx.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void listBoxInvokAdder(ListBox listBox, string msg)
+        {
+            if (listBox.InvokeRequired)
+            {
+                listBox.Invoke((MethodInvoker)delegate
+                {
+                    listBox.Items.Add(msg);
+                });
+            }
+            else
+            {
+                listBox.Items.Add(msg);
+            }
         }
     }
 }

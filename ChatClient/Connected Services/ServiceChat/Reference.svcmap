@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="de5ed915-234d-4982-9b67-6e523668126b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="a52712fc-147e-49d1-a971-42da47e6162d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,12 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://10.9.0.1:8733/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="e7ed4190-c4b8-4bc0-9903-738faf0fc8c4" SourceId="1" SourceUrl="http://10.9.0.1:8733/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="221468db-f837-4874-825c-9f1bf2a8bfb4" SourceId="1" SourceUrl="http://10.9.0.1:8733/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="e8d6a8d3-7945-4f9f-b254-dd9fe84fa2e4" SourceId="1" SourceUrl="http://10.9.0.1:8733/mex" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="53092bb9-f4c6-459b-86e3-b7a32d068c01" SourceId="1" SourceUrl="http://localhost:8733/?xsd=xsd0" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="1fcf68b7-b402-4e2b-beb7-433dbb1aff33" SourceId="1" SourceUrl="http://localhost:8733/?xsd=xsd1" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="388d8488-56d4-4d7a-9cb6-670bb2da590d" SourceId="1" SourceUrl="http://localhost:8733/?disco" />
+    <MetadataFile FileName="ServiceChat.wsdl" MetadataType="Wsdl" ID="c7a6920d-6a43-4f06-b30b-8aaf157a53a1" SourceId="1" SourceUrl="http://localhost:8733/?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

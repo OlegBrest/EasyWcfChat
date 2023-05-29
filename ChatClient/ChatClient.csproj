@@ -83,13 +83,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Connected Services\ServiceChat\service.wsdl" />
-    <None Include="Connected Services\ServiceChat\service.xsd">
+    <None Include="Connected Services\ServiceChat\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ServiceChat\service1.xsd">
+    <None Include="Connected Services\ServiceChat\item1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ServiceChat\ServiceChat.wsdl" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -108,6 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ServiceChat\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceChat\item.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ServiceChat\configuration91.svcinfo" />

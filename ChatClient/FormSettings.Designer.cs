@@ -31,9 +31,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.bttnOk = new System.Windows.Forms.Button();
+            this.portUpDown = new System.Windows.Forms.NumericUpDown();
             this.txtbxUserName = new System.Windows.Forms.TextBox();
             this.txtbxServerAddress = new System.Windows.Forms.TextBox();
-            this.portUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,6 +66,20 @@
             this.bttnOk.UseVisualStyleBackColor = true;
             this.bttnOk.Click += new System.EventHandler(this.bttnOk_Click);
             // 
+            // portUpDown
+            // 
+            this.portUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::ChatClient.Properties.Settings.Default, "ServerPort", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.portUpDown.Location = new System.Drawing.Point(303, 6);
+            this.portUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.portUpDown.Name = "portUpDown";
+            this.portUpDown.Size = new System.Drawing.Size(77, 20);
+            this.portUpDown.TabIndex = 3;
+            this.portUpDown.Value = global::ChatClient.Properties.Settings.Default.ServerPort;
+            // 
             // txtbxUserName
             // 
             this.txtbxUserName.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::ChatClient.Properties.Settings.Default, "UserName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -85,20 +99,6 @@
             this.txtbxServerAddress.TabIndex = 1;
             this.txtbxServerAddress.Text = global::ChatClient.Properties.Settings.Default.serverAddress;
             this.txtbxServerAddress.TextChanged += new System.EventHandler(this.txtbx_TextChanged);
-            // 
-            // portUpDown
-            // 
-            this.portUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::ChatClient.Properties.Settings.Default, "ServerPort", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.portUpDown.Location = new System.Drawing.Point(303, 6);
-            this.portUpDown.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.portUpDown.Name = "portUpDown";
-            this.portUpDown.Size = new System.Drawing.Size(77, 20);
-            this.portUpDown.TabIndex = 3;
-            this.portUpDown.Value = global::ChatClient.Properties.Settings.Default.ServerPort;
             // 
             // FormSettings
             // 
